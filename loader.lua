@@ -16,30 +16,31 @@ Loader.LAUNCHER_PATH_TARGET = "launcher"
 -------------------------------------------------
 
 Loader.getPastbin = function( code, path )
-	local content = loadUrlContent(
-		Loader.PASTBIN_URL..code
+	local r = saveUrlContentToDisk( 
+		Loader.PASTBIN_URL..textutils.urlEncode( code ),
+		path
 	)
-	return content != nil and saveToFile( content, path )
+	return r
 end
 
 Loader.getGithub = function( githubFile, path )
-	local content = loadUrlContent(
-		Loader.GITHUB_URL..githubFile
+	local r = Loader.saveUrlContentToDisk(
+		Loader.GITHUB_URL..textutils.urlEncode( githubFile ),
+		path
 	)
-	return content != nil and saveToFile( content, path )
+	return r
 end
 
 Loader.loadUrlContent = function( url )
-    local response = http.get(
-        textutils.urlEncode( url )
-    )
+    local response = http.get( url )
         
     if response then
         local content = response.readAll()
         response.close()
         return content
     else
-        printError( "Failed loading URL." )
+        printError( "Failed loading URL :" )
+        printError( url )
 		return nil
     end
 end
@@ -48,7 +49,16 @@ end
 --	Disk utils
 -------------------------------------------------
 
-local function saveToFile(content, file)
+Loader.saveUrlContentToDisk = function( url, path )
+	local content = Loader.loadUrlContent( url )
+	if content ~= nil then
+		local r = Loader.saveToFile( content, path )
+		return r
+	end
+	return false
+end
+
+Loader.saveToFile = function( content, file )
     local sPath = shell.resolve( file )
 	fs.delete( sPath )
 	
@@ -69,11 +79,12 @@ term.clear()
 term.setCursorPos(1,1) 
 print("Loading launcher...")
 print("Please wait")
-local result = Loader.getGithub(Loader.LAUNCHER_PATH_SOURCE, LAUNCHER_PATH_TARGET)
+
+local result = Loader.getGithub(Loader.LAUNCHER_PATH_SOURCE, Loader.LAUNCHER_PATH_TARGET)
 
 if result then
 	print("Loading successfull")
-	shell.run(LAUNCHER_PATH_TARGET)
+	shell.run(Loader.LAUNCHER_PATH_TARGET)
 else
 	print("Loading fail")
-
+end
