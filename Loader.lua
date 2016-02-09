@@ -4,34 +4,32 @@
 --	Purpose :		Load my programe easily
 -------------------------------------------------
 
-local Loader = {}
-
-Loader.PASTBIN_URL = "http://pastebin.com/raw.php?i="
-Loader.GITHUB_URL = "https://raw.githubusercontent.com/arkeine/Minecraft-turtle/master/"
-Loader.LAUNCHER_PATH_SOURCE = "Launcher.lua"
-Loader.LAUNCHER_PATH_TARGET = "Launcher"
+PASTBIN_URL = "http://pastebin.com/raw.php?i="
+GITHUB_URL = "https://raw.githubusercontent.com/arkeine/Minecraft-turtle/master/"
+LAUNCHER_PATH_SOURCE = "Launcher.lua"
+LAUNCHER_PATH_TARGET = "Launcher"
 
 -------------------------------------------------
 --	Load from external sources
 -------------------------------------------------
 
-function Loader.getPastbin( code, path )
+function getPastbin( code, path )
 	local r = saveUrlContentToDisk( 
-		Loader.PASTBIN_URL..textutils.urlEncode( code ),
+		PASTBIN_URL..textutils.urlEncode( code ),
 		path
 	)
 	return r
 end
 
-function Loader.getGithub( githubFile, path )
-	local r = Loader.saveUrlContentToDisk(
-		Loader.GITHUB_URL..textutils.urlEncode( githubFile ),
+function getGithub( githubFile, path )
+	local r = saveUrlContentToDisk(
+		GITHUB_URL..textutils.urlEncode( githubFile ),
 		path
 	)
 	return r
 end
 
-function Loader.loadUrlContent( url )
+local function loadUrlContent( url )
     local response = http.get( url )
         
     if response then
@@ -49,16 +47,16 @@ end
 --	Disk utils
 -------------------------------------------------
 
-function Loader.saveUrlContentToDisk( url, path )
-	local content = Loader.loadUrlContent( url )
+local function saveUrlContentToDisk( url, path )
+	local content = loadUrlContent( url )
 	if content ~= nil then
-		local r = Loader.saveToFile( content, path )
+		local r = saveToFile( content, path )
 		return r
 	end
 	return false
 end
 
-function Loader.saveToFile( content, file )
+local function saveToFile( content, file )
     local sPath = shell.resolve( file )
 	fs.delete( sPath )
 	
@@ -72,23 +70,19 @@ function Loader.saveToFile( content, file )
 end 
 
 -------------------------------------------------
---	Init
+--	Main
 -------------------------------------------------
 
-function Loader.main()
-	term.clear() 
-	term.setCursorPos(1,1) 
-	print("Loading launcher...")
-	print("Please wait")
+term.clear() 
+term.setCursorPos(1,1) 
+print("Loading launcher...")
+print("Please wait")
 
-	local result = Loader.getGithub(Loader.LAUNCHER_PATH_SOURCE, Loader.LAUNCHER_PATH_TARGET)
+local result = getGithub(LAUNCHER_PATH_SOURCE, LAUNCHER_PATH_TARGET)
 
-	if result then
-		print("Loading successfull")
-		shell.run(Loader.LAUNCHER_PATH_TARGET)
-	else
-		print("Loading fail")
-	end
+if result then
+	print("Loading successfull")
+	shell.run(LAUNCHER_PATH_TARGET)
+else
+	print("Loading fail")
 end
-
-return Loader
