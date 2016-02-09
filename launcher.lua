@@ -34,7 +34,7 @@ end
 --	Init
 -------------------------------------------------
 
-require Loader
+local Loader = require("Loader")
 local result = Loader.getGithub("libraries/ConsoleGUI.lua", Launcher.LIBRARIES_DIR.."ConsoleGUI")
 
 if not result then
@@ -42,7 +42,7 @@ if not result then
 	os.exit()
 end
 
-require ConsoleGUI
+local ConsoleGUI = require('ConsoleGUI')
 ConsoleGUI.displaySplashScreen()
 
 

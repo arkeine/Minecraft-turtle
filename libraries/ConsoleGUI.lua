@@ -4,7 +4,7 @@
 --	Purpose :		Print some messages for the user
 -------------------------------------------------
 
-ConsoleGUI = {}
+local ConsoleGUI = {}
 
 ConsoleGUI.LINE = "-----------------------------------"
 ConsoleGUI.messageType = {"","Error", "Input", "Info", "Warning"}
@@ -14,7 +14,7 @@ ConsoleGUI.messageAnswer = {"No", "Yes", "Ok", "Cancel", "Ignore"}
 --	Display
 -------------------------------------------------
 
-ConsoleGUI.displayLogo = function()
+function ConsoleGUI.displayLogo()
 	term.clear() 
 	term.setCursorPos(1,1) 
 	print("  ___       _                 __ _   ")
@@ -25,7 +25,7 @@ ConsoleGUI.displayLogo = function()
 	print("\\_| |_/_|  |_|\\_\\ |___/\\___/|_|  \\__|")
 end
 
-ConsoleGUI.displayLog = function (message, messageType=1)
+function ConsoleGUI.displayLog (message, messageType=1)
 	if messageType==1 then
 		print(message)
 	else
@@ -33,7 +33,7 @@ ConsoleGUI.displayLog = function (message, messageType=1)
 	end
 end
 
-ConsoleGUI.displayBox = function(message, title, messageType=1)
+function ConsoleGUI.displayBox(message, title, messageType=1)
 	term.clear() 
 	term.setCursorPos(1,1) 
 	print(ConsoleGUI.LINE)
@@ -45,12 +45,12 @@ ConsoleGUI.displayBox = function(message, title, messageType=1)
 	print(ConsoleGUI.LINE)
 end 
 
-ConsoleGUI.displayError = function(message, title, messageType=2)
+function ConsoleGUI.displayError(message, title, messageType=2)
 	ConsoleGUI.displayBox(message, title, messageType)
 	ConsoleGUI.pressAKey()
 end 
 
-ConsoleGUI.displayNewWindow = function(title)
+function ConsoleGUI.displayNewWindow(title)
 	term.clear() 
 	term.setCursorPos(1,1) 
 	print(ConsoleGUI.LINE)
@@ -58,7 +58,7 @@ ConsoleGUI.displayNewWindow = function(title)
 	print(ConsoleGUI.LINE)
 end 
 
-ConsoleGUI.displaySplashScreen = function()
+function ConsoleGUI.displaySplashScreen()
 	ConsoleGUI.displayLogo()
 	os.sleep(1)
 	ConsoleGUI.pressAKey()
@@ -69,14 +69,14 @@ end
 -------------------------------------------------
 
 
-ConsoleGUI.pressAKey = function()
+function ConsoleGUI.pressAKey()
 	print("")
 	print("Press a key...")
 	print("")
 	read()
 end 
 
-ConsoleGUI.inputNumber = function()
+function ConsoleGUI.inputNumber()
 	local input = read()
 	input = tonumber(input)
 	while type(input) == "nil" do
@@ -87,7 +87,7 @@ ConsoleGUI.inputNumber = function()
 	return input
 end
 
-ConsoleGUI.inputNumberInRange = function(minumum, maximum)
+function ConsoleGUI.inputNumberInRange(minumum, maximum)
 	print("Enter a number between [",minumum," - ",maximum,"]")
 	while true do
 		local input = ConsoleGUI.inputNumber()
@@ -99,7 +99,7 @@ ConsoleGUI.inputNumberInRange = function(minumum, maximum)
 	end
 end 
 
-ConsoleGUI.askChoice = function(message, choices)
+function ConsoleGUI.askChoice(message, choices)
 	print(message)
 	
 	local n = 0;
@@ -110,3 +110,5 @@ ConsoleGUI.askChoice = function(message, choices)
 	local r = inputNumberInRange(1, n)
 	return r
 end 
+
+return ConsoleGUI

@@ -4,18 +4,18 @@
 --	Purpose :		Load my programe easily
 -------------------------------------------------
 
-Loader = {}
+local Loader = {}
 
 Loader.PASTBIN_URL = "http://pastebin.com/raw.php?i="
 Loader.GITHUB_URL = "https://raw.githubusercontent.com/arkeine/Minecraft-turtle/master/"
-Loader.LAUNCHER_PATH_SOURCE = "launcher.lua"
-Loader.LAUNCHER_PATH_TARGET = "launcher"
+Loader.LAUNCHER_PATH_SOURCE = "Launcher.lua"
+Loader.LAUNCHER_PATH_TARGET = "Launcher"
 
 -------------------------------------------------
 --	Load from external sources
 -------------------------------------------------
 
-Loader.getPastbin = function( code, path )
+function Loader.getPastbin( code, path )
 	local r = saveUrlContentToDisk( 
 		Loader.PASTBIN_URL..textutils.urlEncode( code ),
 		path
@@ -23,7 +23,7 @@ Loader.getPastbin = function( code, path )
 	return r
 end
 
-Loader.getGithub = function( githubFile, path )
+function Loader.getGithub( githubFile, path )
 	local r = Loader.saveUrlContentToDisk(
 		Loader.GITHUB_URL..textutils.urlEncode( githubFile ),
 		path
@@ -31,7 +31,7 @@ Loader.getGithub = function( githubFile, path )
 	return r
 end
 
-Loader.loadUrlContent = function( url )
+function Loader.loadUrlContent( url )
     local response = http.get( url )
         
     if response then
@@ -49,7 +49,7 @@ end
 --	Disk utils
 -------------------------------------------------
 
-Loader.saveUrlContentToDisk = function( url, path )
+function Loader.saveUrlContentToDisk( url, path )
 	local content = Loader.loadUrlContent( url )
 	if content ~= nil then
 		local r = Loader.saveToFile( content, path )
@@ -58,7 +58,7 @@ Loader.saveUrlContentToDisk = function( url, path )
 	return false
 end
 
-Loader.saveToFile = function( content, file )
+function Loader.saveToFile( content, file )
     local sPath = shell.resolve( file )
 	fs.delete( sPath )
 	
@@ -75,16 +75,20 @@ end
 --	Init
 -------------------------------------------------
 
-term.clear() 
-term.setCursorPos(1,1) 
-print("Loading launcher...")
-print("Please wait")
+function Loader.main()
+	term.clear() 
+	term.setCursorPos(1,1) 
+	print("Loading launcher...")
+	print("Please wait")
 
-local result = Loader.getGithub(Loader.LAUNCHER_PATH_SOURCE, Loader.LAUNCHER_PATH_TARGET)
+	local result = Loader.getGithub(Loader.LAUNCHER_PATH_SOURCE, Loader.LAUNCHER_PATH_TARGET)
 
-if result then
-	print("Loading successfull")
-	shell.run(Loader.LAUNCHER_PATH_TARGET)
-else
-	print("Loading fail")
+	if result then
+		print("Loading successfull")
+		shell.run(Loader.LAUNCHER_PATH_TARGET)
+	else
+		print("Loading fail")
+	end
 end
+
+return Loader
