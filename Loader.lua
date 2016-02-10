@@ -7,9 +7,9 @@
 Loader = {}
 
 Loader.PASTBIN_URL = "http://pastebin.com/raw.php?i="
-Loader.GITHUB_URL = "https://raw.githubusercontent.com/arkeine/Minecraft-turtle/master/"
-Loader.LAUNCHER_PATH_SOURCE = "launcher.lua"
-Loader.LAUNCHER_PATH_TARGET = "launcher"
+Loader.GITHUB_URL = "https://raw.githubusercontent.com/arkeine/Minecraft-turtle/debug/"
+Loader.LAUNCHER_PATH_SOURCE = "Launcher.lua"
+Loader.LAUNCHER_PATH_TARGET = "Launcher"
 
 -------------------------------------------------
 --	Load from external sources
