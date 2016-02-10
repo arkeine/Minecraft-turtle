@@ -23,28 +23,28 @@ function displayLogo()
 	print("\\_| |_/_|  |_|\\_\\ |___/\\___/|_|  \\__|")
 end
 
-function displayLog (message, MESSAGE_TYPE=1)
-	if MESSAGE_TYPE==1 then
+function displayLog (message, messageType=1)
+	if messageType==1 then
 		print(message)
 	else
-		print(MESSAGE_TYPE[MESSAGE_TYPE], " : ", message)
+		print(MESSAGE_TYPE[messageType], " : ", message)
 	end
 end
 
-function displayBox(message, title, MESSAGE_TYPE=1)
+function displayBox(message, title, messageType=1)
 	term.clear() 
 	term.setCursorPos(1,1) 
 	print(LINE)
 	print()
-	displayLog(title, MESSAGE_TYPE)
+	displayLog(title, messageType)
 	print()
 	print(message)
 	print()
 	print(LINE)
 end 
 
-function displayError(message, title, MESSAGE_TYPE=2)
-	displayBox(message, title, MESSAGE_TYPE)
+function displayError(message, title, messageType=2)
+	displayBox(message, title, messageType)
 	pressAKey()
 end 
 
