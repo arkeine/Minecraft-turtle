@@ -69,10 +69,10 @@ saveUrlContentToDisk = function( url, path )
 end
 
 saveToFile = function( content, file )
-	fs.delete( sPath )
+	fs.delete( file )
 	
     if content then        
-        local file = fs.open( sPath, "w" )
+        local file = fs.open( file, "w" )
         file.write( content )
         file.close()
         return true
