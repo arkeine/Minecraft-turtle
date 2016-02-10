@@ -34,6 +34,7 @@ end
 --	Init
 -------------------------------------------------
 
+print("DEBUG")
 require Loader
 local result = Loader.getGithub("libraries/ConsoleGUI.lua", Launcher.LIBRARIES_DIR.."ConsoleGUI")
 
