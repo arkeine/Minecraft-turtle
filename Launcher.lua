@@ -35,7 +35,8 @@ end
 -------------------------------------------------
 
 print("DEBUG")
-require Loader
+os.loadAPI("Loader")
+
 local result = Loader.getGithub("libraries/ConsoleGUI.lua", Launcher.LIBRARIES_DIR.."ConsoleGUI")
 
 if not result then
@@ -43,7 +44,7 @@ if not result then
 	os.exit()
 end
 
-require ConsoleGUI
+os.loadAPI("ConsoleGUI")
 ConsoleGUI.displaySplashScreen()
 
 
