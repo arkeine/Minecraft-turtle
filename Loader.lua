@@ -69,7 +69,6 @@ saveUrlContentToDisk = function( url, path )
 end
 
 saveToFile = function( content, file )
-    local sPath = shell.resolve( file )
 	fs.delete( sPath )
 	
     if content then        
