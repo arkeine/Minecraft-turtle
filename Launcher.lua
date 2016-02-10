@@ -44,7 +44,7 @@ if not result then
 	os.exit()
 end
 
-os.loadAPI("libraries/ConsoleGUI")
+os.loadAPI(Launcher.LIBRARIES_DIR.."ConsoleGUI")
 ConsoleGUI.displaySplashScreen()
 
 
